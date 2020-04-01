@@ -118,10 +118,12 @@ public class GeneratorResource {
     ResponseEntity downloadApplication(@RequestBody String applicationConfiguration) {
         log.info("Downloading application - .yo-rc.json: {}", applicationConfiguration);
         String applicationId = UUID.randomUUID().toString();
+        Object document = Configuration.defaultConfiguration().jsonProvider().parse(applicationConfiguration);
+        String apiType = JsonPath.read(document, "$.generator-jhipster.apiType");
         String zippedApplication;
         try {
             zippedApplication = this.generatorService.generateZippedApplication(applicationId,
-                applicationConfiguration);
+                applicationConfiguration,apiType);
         } catch (IOException ioe) {
             log.error("Error generating application", ioe);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

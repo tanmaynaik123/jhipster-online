@@ -84,6 +84,21 @@ public class GeneratorService {
         log.info("Application generated");
         return workingDir;
     }
+    
+    private File generateApplication(String applicationId, String applicationConfiguration, String apiType) throws IOException {
+    	File workingDir = new File(
+				applicationProperties.getTmpFolder() + "/jhipster/applications/" + applicationId);
+		/*
+		 * workingDir.setWritable(true); workingDir.setReadable(true);
+		 * workingDir.setExecutable(true);
+		 */
+		FileUtils.forceMkdir(workingDir);
+        this.generateYoRc(applicationId, workingDir, applicationConfiguration);
+        log.info(".yo-rc.json created");
+        this.jHipsterService.generateApplication(applicationId, workingDir, apiType);
+        log.info("Application generated");
+        return workingDir;
+    }
 
     private void generateYoRc(String applicationId, File workingDir, String applicationConfiguration)
         throws IOException {

@@ -63,6 +63,19 @@ public class JHipsterService {
         this.runProcess(generationId, workingDir, jhipsterCommand + " --force-insight --skip-checks " +
             "--skip-install --skip-cache --skip-git --prettier-java");
     }
+    
+    public void generateApplication(String generationId, File workingDir, String apiType) throws IOException {
+        this.logsService.addLog(generationId, "Running JHipster");
+        if(apiType!=null && apiType.equalsIgnoreCase("graphql")) {
+        	this.runProcess(generationId, workingDir, jhipsterCommand + " --force-insight --skip-checks " +
+                    "--skip-install --skip-cache --skip-git --prettier-java --blueprints gpqltest");
+        }
+        else {
+        	this.runProcess(generationId, workingDir, jhipsterCommand + " --force-insight --skip-checks " +
+                    "--skip-install --skip-cache --skip-git --prettier-java");
+        }
+        
+    }
 
     public void runImportJdl(String generationId, File workingDir, String jdlFileName) throws IOException {
         this.logsService.addLog(generationId, "Running `jhipster import-jdl");
