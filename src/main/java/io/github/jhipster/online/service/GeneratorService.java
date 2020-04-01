@@ -55,10 +55,10 @@ public class GeneratorService {
         this.logsService = logsService;
     }
 
-    public String generateZippedApplication(String applicationId, String applicationConfiguration) throws IOException {
+    public String generateZippedApplication(String applicationId, String applicationConfiguration, String apiType) throws IOException {
         StopWatch watch = new StopWatch();
         watch.start();
-        File workingDir = generateApplication(applicationId, applicationConfiguration);
+        File workingDir = generateApplication(applicationId, applicationConfiguration,apiType);
         this.zipResult(workingDir);
         watch.stop();
         log.info("Zipped application generated in {} ms", watch.getTotalTimeMillis());
